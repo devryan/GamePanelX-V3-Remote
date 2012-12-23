@@ -1,0 +1,17 @@
+Thank you for choosing GamePanelX Remote!
+
+Simply run (as root or with sudo):
+
+chmod u+x install.sh
+./install.sh
+
+
+This will get you started on the installation.
+To uninstall, run "./uninstall.sh", and it will walk you through removal.
+
+
+Remote Install Documentation: http://gamepanelx.com/wikiv3/index.php?title=Remote_Install
+
+GamePanelX Website: http://gamepanelx.com/
+Support Forums: http://gamepanelx.com/forums/
+General Documentation: http://gamepanelx.com/wikiv3/
