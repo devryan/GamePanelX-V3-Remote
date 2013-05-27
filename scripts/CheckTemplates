@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # GamePanelX
-# Remote scripts v3.0.11
+# Remote scripts v3.0.12
 #
 # Check status of Template creation
 #
@@ -33,9 +33,9 @@ fi
 
 for tplid in $(echo "$tpl_ids" | sed 's/\,/\ /g')
 do
-	if [ -f $HOME/templates/.gpx_"$tplid" ]
+	if [ -f /usr/local/gpx/templates/.gpx_"$tplid" ]
 	then
-		this_pid="$(cat $HOME/templates/.gpx_"$tplid")"
+		this_pid="$(cat /usr/local/gpx/templates/.gpx_"$tplid")"
 
 		if [ "$this_pid" ]
 		then

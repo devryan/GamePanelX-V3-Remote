@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # GamePanelX
-# Remote scripts v3.0.11
+# Remote scripts v3.0.12
 #
 # Create a Game/Voice Server Addon
 #
@@ -35,6 +35,6 @@ then
 fi
 
 cd $tpl_file_path
-tar -czf $HOME/addons/$tpl_hash.tar.gz * >> /dev/null 2>&1 &
+tar -czf /usr/local/gpx/addons/$tpl_hash.tar.gz * >> /dev/null 2>&1 &
 pid=$!
-echo $pid > $HOME/addons/.gpx_$tpl_hash
+echo $pid > /usr/local/gpx/addons/.gpx_$tpl_hash

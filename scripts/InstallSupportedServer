@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # GamePanelX
-# Remote scripts v3.0.11
+# Remote scripts v3.0.12
 #
 # Install a Supported Game/Voice server
 #
@@ -61,37 +61,37 @@ then
 	    exit
 	fi
 
-	if [ ! -f "$HOME/uploads/$install_file" ]
+	if [ ! -f "/usr/local/gpx/uploads/$install_file" ]
 	then
-	    echo "InstallSupportedServer: The installer file '$HOME/uploads/$install_file' does not exist.  Exiting."
+	    echo "InstallSupportedServer: The installer file '/usr/local/gpx/uploads/$install_file' does not exist.  Exiting."
 	    exit
 	fi
 # Steam Games
 else
         # Check for hldsupdatetool
-        if [ ! -f "$HOME/uploads/hldsupdatetool.bin" ]
+        if [ ! -f "/usr/local/gpx/uploads/hldsupdatetool.bin" ]
         then
-            echo "InstallSupportedServer: The 'hldsupdatetool.bin' file must be placed in $HOME/uploads!  Exiting."
+            echo "InstallSupportedServer: The 'hldsupdatetool.bin' file must be placed in /usr/local/gpx/uploads!  Exiting."
             exit
         fi
 fi
 
-mkdir -p $HOME/tmp/$archiveid/
+mkdir -p /usr/local/gpx/tmp/$archiveid/
 
 
 if [ "$steam_game" == "" ]
 then
-    echo y | cp $HOME/uploads/$install_file $HOME/tmp/$archiveid/
+    echo y | cp /usr/local/gpx/uploads/$install_file /usr/local/gpx/tmp/$archiveid/
 fi
 
 
-cd $HOME/tmp/$archiveid/
+cd /usr/local/gpx/tmp/$archiveid/
 
 # Steam Games
 if [ "$steam_game" ]
 then
     # Check for SteamInstall script
-    if [ ! -f $HOME/scripts/SteamInstall ]
+    if [ ! -f /usr/local/gpx/bin/SteamInstall ]
     then
 	echo "ERROR: No SteamInstall script found!  Are you running Remote >= v3.0?  Exiting."
 	exit
@@ -99,14 +99,14 @@ then
 
     if [ "$admin_email" ]
     then
-        $HOME/scripts/SteamInstall -e "$admin_email" -m "$steam_game" >> /dev/null 2>&1 &
+        /usr/local/gpx/bin/SteamInstall -e "$admin_email" -m "$steam_game" >> /dev/null 2>&1 &
 	pid=$!
     else
-        $HOME/scripts/SteamInstall -m "$steam_game" >> /dev/null 2>&1 &
+        /usr/local/gpx/bin/SteamInstall -m "$steam_game" >> /dev/null 2>&1 &
         pid=$!
     fi
 
-    echo $pid > $HOME/tmp/$archiveid/.gpxpid
+    echo $pid > /usr/local/gpx/tmp/$archiveid/.gpxpid
 # Other Games
 else
 
@@ -118,7 +118,7 @@ else
     # Start creation process
     nice -n 19 ./.gpxinstall >> /dev/null 2>&1 &
     pid=$!
-    echo $pid > $HOME/tmp/$archiveid/.gpxpid
+    echo $pid > /usr/local/gpx/tmp/$archiveid/.gpxpid
 fi
 
 sleep 2
@@ -134,18 +134,18 @@ do
 	# Check for a successful steam install
 	if [ "`grep '100.00%' .gpxinstall.log | grep downloading`" ]
 	then
-	    echo "1" > $HOME/templates/$archiveid/.gpxsteamresult
+	    echo "1" > /usr/local/gpx/templates/$archiveid/.gpxsteamresult
 	else
-	    echo "0" > $HOME/templates/$archiveid/.gpxsteamresult
+	    echo "0" > /usr/local/gpx/templates/$archiveid/.gpxsteamresult
 	fi
 
-        $HOME/scripts/CreateTemplate -p $HOME/tmp/$archiveid/ -i $archiveid
+        /usr/local/gpx/bin/CreateTemplate -p /usr/local/gpx/tmp/$archiveid/ -i $archiveid
         break
     fi
     sleep 5
 done >> /dev/null 2>&1 &
 whilepid=$!
-echo $whilepid > $HOME/tmp/$archiveid/.gpxinstall.pid
+echo $whilepid > /usr/local/gpx/tmp/$archiveid/.gpxinstall.pid
 
 # Output
 echo "success"

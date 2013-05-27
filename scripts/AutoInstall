@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # GamePanelX
-# Remote scripts v3.0.11
+# Remote scripts v3.0.12
 #
 # Auto installer - use given mirrors+cmd to install a gameserver, then being template process.
 # This script should be sent to /dev/null 2>&1 & since it will take some time to complete
@@ -56,11 +56,12 @@ then
 fi
 
 # Setup
-rm -fr $HOME/tmp/$tpl_id
-mkdir $HOME/tmp/$tpl_id
-install_dir=$HOME/tmp/$tpl_id
+rm -fr /usr/local/gpx/tmp/$tpl_id
+mkdir /usr/local/gpx/tmp/$tpl_id
+install_dir=/usr/local/gpx/tmp/$tpl_id
 install_dir_local="tmp/$tpl_id"
-install_log="$install_dir/.gpx_auto.log"
+#install_log="$install_dir/.gpx_auto.log"
+install_log="/usr/local/gpx/logs/templates.log"
 echo > $install_log
 
 # Move to dir
@@ -136,13 +137,13 @@ fi
 # Debug; start template now, instead of backgrounding
 #if [ "$debug_on" ]
 #then 
-#	$HOME/scripts/CreateTemplate -p $install_dir_local -i $tpl_id -u "$callback_url" $add_debug
+#	/usr/local/gpx/bin/CreateTemplate -p $install_dir_local -i $tpl_id -u "$callback_url" $add_debug
 ## Start tpl in background
 #else
-#	$HOME/scripts/CreateTemplate -p $install_dir_local -i $tpl_id -u "$callback_url" $add_debug >> /dev/null 2>&1 &
+#	/usr/local/gpx/bin/CreateTemplate -p $install_dir_local -i $tpl_id -u "$callback_url" $add_debug >> /dev/null 2>&1 &
 #fi
 
-$HOME/scripts/CreateTemplate -p $install_dir_local -i $tpl_id -u "$callback_url" $add_debug
+/usr/local/gpx/bin/CreateTemplate -p $install_dir_local -i $tpl_id -u "$callback_url" $add_debug
 
 
 # echo "success"

@@ -1,17 +1,27 @@
 Thank you for choosing GamePanelX Remote!
 
-Simply run (as root or with sudo):
 
-chmod u+x install.sh
-./install.sh
+INSTALLATION
+----------
+# sudo chmod u+x install.sh
+# sudo ./install.sh
+
+This will get you started on the installation.  This will also ask you if you want to install the FTP server.
 
 
-This will get you started on the installation.
-To uninstall, run "./uninstall.sh", and it will walk you through removal.
 
-
-Remote Install Documentation: http://gamepanelx.com/wikiv3/index.php?title=Remote_Install
-
-GamePanelX Website: http://gamepanelx.com/
+DOCUMENTATION/TUTORIALS
+-----------
+Documentation: http://gamepanelx.com/wikiv3/index.php?title=Remote_Install
+Website: http://gamepanelx.com/
 Support Forums: http://gamepanelx.com/forums/
 General Documentation: http://gamepanelx.com/wikiv3/
+
+
+
+UNINSTALL
+-----------
+To uninstall, this will walk you through removal.
+
+# sudo chmod u+x ./uninstall.sh
+# sudo ./uninstall.sh

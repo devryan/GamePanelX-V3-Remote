@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # GamePanelX
-# Remote scripts v3.0.11
+# Remote scripts v3.0.12
 #
 # Check status of Game/Voice Server creation
 #
@@ -43,9 +43,9 @@ then
   exit
 fi
 
-if [ -f $HOME/accounts/$srv_username/$srv_type/$srv_ip\:$srv_port/.gpx_template ]
+if [ -f /usr/local/gpx/users/$srv_username/$srv_type/$srv_ip\:$srv_port/.gpx_template ]
 then
-    pid=`cat $HOME/accounts/$srv_username/$srv_type/$srv_ip\:$srv_port/.gpx_template`
+    pid=`cat /usr/local/gpx/users/$srv_username/$srv_type/$srv_ip\:$srv_port/.gpx_template`
     check_pid=`ps aux | grep $pid | grep -v grep`
 
     if [ "$check_pid" == "" ]

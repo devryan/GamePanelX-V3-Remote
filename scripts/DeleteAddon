@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # GamePanelX
-# Remote scripts v3.0.11
+# Remote scripts v3.0.12
 #
 # Delete a Game/Voice Addon
 #
@@ -30,7 +30,7 @@ then
   exit
 fi
 
-if [ -f $HOME/addons/$tpl_hash.tar.gz ]
+if [ -f /usr/local/gpx/addons/$tpl_hash.tar.gz ]
 then
-    rm -f $HOME/addons/$tpl_hash.tar.gz $HOME/addons/.gpx_$tpl_hash
+    rm -f /usr/local/gpx/addons/$tpl_hash.tar.gz /usr/local/gpx/addons/.gpx_$tpl_hash
 fi

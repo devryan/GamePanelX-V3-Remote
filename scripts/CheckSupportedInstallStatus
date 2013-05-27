@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # GamePanelX
-# Remote scripts v3.0.11
+# Remote scripts v3.0.12
 #
 # Check status of Supported Server creation
 #
@@ -35,9 +35,9 @@ then
     exit
 fi
 
-if [ -f $HOME/tmp/$tpl_id/.gpxpid ]
+if [ -f /usr/local/gpx/tmp/$tpl_id/.gpxpid ]
 then
-    pid=`cat $HOME/tmp/$tpl_id/.gpxpid`
+    pid=`cat /usr/local/gpx/tmp/$tpl_id/.gpxpid`
     check_pid=`ps aux | grep $pid | grep -v grep`
 
     # Completed
@@ -62,7 +62,7 @@ then
     else
         if [ -n "$total_size" ]
         then
-	    curr_size=`du -s $HOME/tmp/$tpl_id/ | awk '{print $1}'`
+	    curr_size=`du -s /usr/local/gpx/tmp/$tpl_id/ | awk '{print $1}'`
             echo "running,$curr_size"
         else
             echo "running"
