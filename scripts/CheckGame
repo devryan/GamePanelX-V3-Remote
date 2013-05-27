@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # GamePanelX
-# Remote scripts v3.0.12
+# Remote scripts v3.0.13
 #
 # Check status of servers (get PID(s), cpu/mem info, time running)
 #
