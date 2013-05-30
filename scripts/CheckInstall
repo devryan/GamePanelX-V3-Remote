@@ -1,18 +1,22 @@
 #!/bin/bash
 #
 # GamePanelX
-# Remote scripts v3.0.13
+# Remote scripts v3.0.14
 #
 # Check the Remote Server installation
 #
 master_cback=
+user_accounts=
 
-while getopts "c:" OPTION
+while getopts "c:u:" OPTION
 do
      case $OPTION in
         c)
                 master_cback=$OPTARG
                 ;;
+	u)
+		user_accounts=$OPTARG
+		;;
         ?)
                 exit
                 ;;
@@ -64,6 +68,25 @@ if [ ! -d "/usr/local/gpx/uploads" ]
 then
     echo "Unable to find the uploads directory; exiting."
     exit
+fi
+
+# Create any user account dirs that are in the db
+if [ "$user_accounts" ]
+then
+    for usr_acct in $(echo "$user_accounts" | sed s/,/\\n/g); do
+	this_usr="$(echo $usr_acct | awk -F':' '{print $1}')"
+	this_pass="$(echo $usr_acct | awk -F':' '{print $2}')"
+
+	# Skip if no usr/pass
+	if [[ "$this_usr" == "" || "$this_pass" == "" ]]; then
+		continue
+	fi
+
+	# Create user if they dont exist
+	if [ ! "$(grep gpx$this_usr: /etc/passwd)" ]; then
+		/usr/local/gpx/bin/CreateUser -u "$this_usr" -p "$this_pass" >> /dev/null 2>&1 &
+	fi
+    done
 fi
 
 # Update config with token
