@@ -10,7 +10,20 @@ This will get you started on the installation.  This will also ask you if you wa
 
 
 
-DOCUMENTATION/TUTORIALS
+UPDATE
+----------
+To update, run:
+# sudo chmod u+x update.sh
+# sudo ./update.sh
+
+
+Note: To update a Remote release _older_ than 3.0.10, run:
+# sudo chmod u+x upgrade_309_3012.sh
+# sudo ./upgrade_309_3012.sh
+
+
+
+SUPPORT/DOCUMENTATION/TUTORIALS
 -----------
 Documentation: http://gamepanelx.com/wikiv3/index.php?title=Remote_Install
 Website: http://gamepanelx.com/
