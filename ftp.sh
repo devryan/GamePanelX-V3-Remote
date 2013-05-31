@@ -57,7 +57,7 @@ gpx_checkreq () {
 	# Check GCC Compiler
 	if [[ "$(which make 2>&1 | grep 'no make in')" || "$(which gcc 2>&1 | grep 'no gcc in')" ]]
 	then
-	    yum_cmd="gcc kernel-headers"
+	    yum_cmd="gcc kernel-headers make"
 	    apt_cmd="build-essential"
 	    gentoo_cmd="sys-devel/gcc"
 	fi
