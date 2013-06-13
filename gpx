@@ -1,0 +1,28 @@
+#!/bin/bash
+##
+# chkconfig: 345 55 25
+# description: GamePanelX Remote
+#
+. /etc/rc.d/init.d/functions
+
+case "$1" in
+start)
+        echo -n "Starting GamePanelX daemon:"
+        /usr/local/gpx/bin/GPXManager
+        echo_success
+        echo
+        ;;
+stop)
+        echo -n "Stopping GamePanelX daemon:"
+        killall GPXManager
+        echo_success
+        echo
+        ;;
+restart)
+        $0 stop
+        $0 start
+        ;;
+*)
+        echo "usage: $0 [start|stop|restart|condrestart]"
+esac
+exit 0
