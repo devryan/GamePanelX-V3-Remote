@@ -8,13 +8,33 @@
 case "$1" in
 start)
         echo -n "Starting GamePanelX daemon:"
+
+	# Start manager
         /usr/local/gpx/bin/GPXManager
+
+	# Start FTP server
+	if [ -f /usr/local/gpx/ftpd/start.sh ]; then
+		/usr/local/gpx/ftpd/start.sh
+	fi
+
         echo_success
         echo
         ;;
 stop)
         echo -n "Stopping GamePanelX daemon:"
-        killall GPXManager
+
+	# Stop manager
+	if [ "$(ps -ef | grep 'GPXManager)' | grep -v grep)" ]; then
+        	killall GPXManager
+	fi
+
+	# Stop FTP server
+	if [ -f /usr/local/gpx/ftpd/start.sh ]; then
+		if [ "$(ps -ef | grep 'pure-ftpd (SERVER)' | grep -v grep)" ]; then
+			killall pure-ftpd
+		fi
+	fi
+
         echo_success
         echo
         ;;
