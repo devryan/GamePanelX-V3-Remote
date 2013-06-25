@@ -189,6 +189,7 @@ fi
 
 # Setup initscript for RedHat / CentOS / Fedora
 if [ -f /etc/redhat-release ]; then
+	echo "Adding system GamePanelX service ..."
 	cp gpx /etc/init.d/gpx
 	chmod u+x /etc/init.d/gpx
 	chkconfig gpx on
