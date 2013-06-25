@@ -157,7 +157,7 @@ then
         # Add our new line
         echo >> /etc/ssh/sshd_config
         echo '# Automatically added by GamePanelX' >> /etc/ssh/sshd_config
-        echo "AllowUsers root $gpx_user gpx*@$ip_net*" >> /etc/ssh/sshd_config
+        echo "AllowUsers root $gpx_user gpx*@$ip_net* gpx*@127.0.0.1" >> /etc/ssh/sshd_config
         
         # Restart SSHD
         if [ -f /sbin/service ]; then
@@ -186,6 +186,13 @@ fi
 
 # Start the manager daemon
 /usr/local/gpx/bin/GPXManager
+
+# Setup initscript for RedHat / CentOS / Fedora
+if [ -f /etc/redhat-release ]; then
+	cp gpx /etc/init.d/gpx
+	chmod u+x /etc/init.d/gpx
+	chkconfig gpx on
+fi
 
 #############################################################################################################
 
