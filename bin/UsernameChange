@@ -1,0 +1,53 @@
+#!/bin/bash
+#
+# GamePanelX
+# Remote scripts v3.0.13
+#
+# Change a username - move all servers to new user dir
+#
+# Example usage:
+# ./UsernameChange -o olduser -n newuser
+#
+old_user=
+new_user=
+tmp_dir="/usr/local/gpx/tmp"
+queue_dir="/usr/local/gpx/queue"
+rand_str="$(date +%s | sha256sum | base64 | head -c 24 ; echo)"
+
+while getopts "o:n:" OPTION
+do
+     case $OPTION in
+         o)
+             old_user=$OPTARG
+             ;;
+         n)
+             new_user=$OPTARG
+             ;;
+         ?)
+             exit
+             ;;
+     esac
+done
+
+if [[ "$old_user" == "" || "$new_user" == "" ]]
+then
+	echo "Insufficient info given!  Exiting."
+	exit
+fi
+
+# Check if user already exists
+if [ "$(grep "^gpx$new_user:" /etc/passwd)" ]
+then
+        echo "That system user already exists, exiting."
+        exit
+fi
+
+# Send to tmp file so manager doesn't read before we're done writing
+echo "type: changeusername" > $tmp_dir/queue_$rand_str
+echo "username: $old_user" >> $tmp_dir/queue_$rand_str
+echo "newusername: $new_user" >> $tmp_dir/queue_$rand_str
+
+# Move to queue dir
+mv $tmp_dir/queue_$rand_str $queue_dir/$rand_str
+
+echo "success"
