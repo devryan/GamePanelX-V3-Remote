@@ -117,23 +117,27 @@ fi
 # Set config file to full path
 cfg_file="$gpxdir/$cfg_file"
 
-# Check config exists (silently fail)
+# Ensure config exists
 if [ ! -f $cfg_file ]
 then
-	#echo "ConfigUpdate: That config file ($cfg_file) doesnt exist, exiting."
-	#exit
+	# Do nothing, they can create configs manually if they want them updated+managed
+	echo "success"
+	exit
 
-	# Create the config for them
-	touch $cfg_file
-
-	# Add defaults if they are set
-	#if [ "$cfg_key_ip" ]; then echo $cfg_key_ip"$cfg_sep"$cfg_val_ip >> $cfg_file; fi
-	#if [ "$cfg_key_port" ]; then echo $cfg_key_port"$cfg_sep"$cfg_val_port >> $cfg_file; fi
-	#if [[ "$cfg_key_maxpl" && "$cfg_val_maxpl" ]]; then echo $cfg_key_maxpl"$cfg_sep"$cfg_val_maxpl >> $cfg_file; fi
-	if [[ "$cfg_key_map" && "$cfg_val_map" ]]; then echo $cfg_key_map"$cfg_sep"$cfg_val_map >> $cfg_file; fi
-	if [[ "$cfg_key_rcon" && "$cfg_val_rcon" ]]; then echo $cfg_key_rcon"$cfg_sep"$cfg_val_rcon >> $cfg_file; fi
-	if [[ "$cfg_key_hostn" && "$cfg_val_hostn" ]]; then echo $cfg_key_hostn"$cfg_sep"$cfg_val_hostn >> $cfg_file; fi
-	if [[ "$cfg_key_passw" && "$cfg_val_passw" ]]; then echo $cfg_key_passw"$cfg_sep"$cfg_val_passw >> $cfg_file; fi
+# 	# Optionally create config automatically and add in some defaults.  This was breaking some games, like Steam based games.  Removing this as it only adds complication.
+# 	# NOTE: Uncomment these below (and the "exit" line above) if you want config files automatically created and populated with some basic defaults.
+#
+# 	# Create the config for them
+# 	touch $cfg_file
+# 
+# 	# Add defaults if they are set
+# 	if [ "$cfg_key_ip" ]; then echo $cfg_key_ip"$cfg_sep"$cfg_val_ip >> $cfg_file; fi
+# 	if [ "$cfg_key_port" ]; then echo $cfg_key_port"$cfg_sep"$cfg_val_port >> $cfg_file; fi
+# 	if [[ "$cfg_key_maxpl" && "$cfg_val_maxpl" ]]; then echo $cfg_key_maxpl"$cfg_sep"$cfg_val_maxpl >> $cfg_file; fi
+# 	if [[ "$cfg_key_map" && "$cfg_val_map" ]]; then echo $cfg_key_map"$cfg_sep"$cfg_val_map >> $cfg_file; fi
+# 	if [[ "$cfg_key_rcon" && "$cfg_val_rcon" ]]; then echo $cfg_key_rcon"$cfg_sep"$cfg_val_rcon >> $cfg_file; fi
+# 	if [[ "$cfg_key_hostn" && "$cfg_val_hostn" ]]; then echo $cfg_key_hostn"$cfg_sep"$cfg_val_hostn >> $cfg_file; fi
+# 	if [[ "$cfg_key_passw" && "$cfg_val_passw" ]]; then echo $cfg_key_passw"$cfg_sep"$cfg_val_passw >> $cfg_file; fi
 fi
 
 #################################################################################
