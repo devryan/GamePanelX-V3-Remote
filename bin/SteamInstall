@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # GamePanelX
-# Remote scripts v3.0.13
+# Remote scripts v3.0.14
 #
 # Steam Install Script
 # Fetch hldsupdatetool, install steam in current dir, install game, then start template creation process
