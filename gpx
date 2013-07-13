@@ -24,7 +24,7 @@ stop)
         echo -n "Stopping GamePanelX daemon:"
 
 	# Stop manager
-	if [ "$(ps -ef | grep 'GPXManager)' | grep -v grep)" ]; then
+	if [ "$(ps -ef | grep 'GPXManager' | grep -v grep)" ]; then
         	killall GPXManager
 	fi
 

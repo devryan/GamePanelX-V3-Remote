@@ -39,5 +39,47 @@ else
 	exit
 fi
 
+sleep 1
+
+##################################################################
+
+ # Stop manager
+if [ "$(ps -ef | grep 'GPXManager' | grep -v grep)" ]; then
+        killall GPXManager
+fi
+
+# Start manager
+/usr/local/gpx/bin/GPXManager
+
+##################################################################
+
+# Set permissions
+if [ -f .gpx_lastuser ]
+then
+	gpx_user="$(cat /usr/local/gpx/.gpx_lastuser)"
+else
+	# Get last system GPX user in /etc/passwd
+	gpx_user="$(grep ':GamePanelX:' /etc/passwd | tail -1 | awk -F: '{print $1}')"
+fi
+
+if [ "$gpx_user" == "" ]; then
+	echo "No gpx user found, exiting."
+	exit
+fi
+
+chown $gpx_user: /usr/local/gpx -R
+chown root:$gpx_user /usr/local/gpx/users -R
+chown root: /usr/local/gpx/ftpd -R
+chmod 0660 /usr/local/gpx/users -R
+chmod 0750 /usr/local/gpx/{logs,templates} -R
+chmod 0660 /usr/local/gpx/logs/*
+chmod 0700 /usr/local/gpx/{addons,queue,tmp,etc,uploads,users} -R
+chmod 0760 /usr/local/gpx/queue /usr/local/gpx/tmp
+chmod 0774 /usr/local/gpx/users
+chmod 0555 /usr/local/gpx/bin
+chmod 0754 /usr/local/gpx/bin/*
+
+##################################################################
+
 echo
 echo "...done"
