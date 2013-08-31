@@ -1,5 +1,7 @@
 #!/bin/bash
 ##
+# GamePanelX V3
+# RedHat/CentOS/Fedora initscript
 # chkconfig: 345 55 25
 # description: GamePanelX Remote
 #
