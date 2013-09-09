@@ -20,7 +20,7 @@ srv_port=
 suspend_srv=
 restart_pid=
 working_dir=
-pid_file=
+srv_pid_file=
 debug=
 
 while getopts "u:i:p:s:r:w:P:d:" OPTION
@@ -45,7 +45,7 @@ do
 	        working_dir=$OPTARG
 		;;
 	P)
-		pid_file=$OPTARG
+		srv_pid_file=$OPTARG
 		;;
 	d)
 		debug=$OPTARG
@@ -108,18 +108,10 @@ then
     fi
 
     # Kill PID if server actually gave us one
-    if [ "$srv_pid_file" ]
-    then
-	echo "PID FILE $srv_pid_file. "
+    if [[ "$srv_pid_file" && -e $gpxdir/$srv_pid_file ]]; then
+	pid_file_pid="$(cat $gpxdir/$srv_pid_file)"
 
-	if [ -e $srv_pid_file ]
-	then
-		pid_file_pid="$(cat $srv_pid_file)"
-
-		echo "PID : $pid_file_pid"
-
-		if [[ "$pid_file_pid" && -e /proc/$pid_file_pid ]]; then kill $pid_file_pid; fi
-	fi
+	if [[ "$pid_file_pid" && -e /proc/$pid_file_pid ]]; then kill $pid_file_pid; fi
     fi
 
     # Kill all server processes
