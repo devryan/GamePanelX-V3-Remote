@@ -140,6 +140,9 @@ do
 		# Remove any temporary files
 		rm -fr /usr/local/gpx/tmp/$tpl_id
 
+		# Set permissions so gpx users cannot write/truncate/remove templates
+		chmod 0640 /usr/local/gpx/templates/$tpl_id.tar.gz
+
                 break
         fi
 
