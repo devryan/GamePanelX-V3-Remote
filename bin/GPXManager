@@ -11,9 +11,22 @@ queuelog="/usr/local/gpx/logs/queue.log"
 tmp_dir="/usr/local/gpx/tmp"
 echo "$(date) $(hostname) Starting GPXManager ..." >> $queuelog
 
+# Sanity check
 if [ "$gpxuser" == "" ]; then 
 	echo "$(date) $(hostname) No gpx user found.  Exiting." >> $queuelog
 	exit
+elif [ "$UID" -ne "0" ]; then
+        echo "ERROR: You must be the root user to run this script.  Exiting."
+        exit
+fi
+
+# Check if already running PID
+if [ -f /usr/local/gpx/gpxmanager.pid ]; then
+        cur_pid=$(cat /usr/local/gpx/gpxmanager.pid)
+        if [[ "$cur_pid" && -e /proc/$cur_pid ]]; then
+                echo "GPXManager is already running in another process ($cur_pid)!  Please stop it and try again."
+                exit
+        fi
 fi
 
 # Fix ourself
@@ -196,6 +209,7 @@ do
 			rm -f $acctfile
 		fi
 	done
+	midloop_pid=$!
 
 	# Report load info every 3 minutes
 	let COUNTER=COUNTER+1
@@ -228,3 +242,10 @@ do
 	# Sleep 3 secs
 	sleep 3
 done >> /dev/null 2>&1 &
+gpxman_pid=$!
+
+# Create PID for this script
+touch /usr/local/gpx/gpxmanager.pid
+echo $gpxman_pid > /usr/local/gpx/gpxmanager.pid
+chown root: /usr/local/gpx/gpxmanager.pid
+chmod 600 /usr/local/gpx/gpxmanager.pid
