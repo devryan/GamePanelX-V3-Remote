@@ -67,13 +67,14 @@ if [ "$gpx_user" == "" ]; then
 	exit
 fi
 
-chown $gpx_user: /usr/local/gpx -R
-chown root:$gpx_user /usr/local/gpx/users -R
+#chown $gpx_user: /usr/local/gpx -R
+#chown root:$gpx_user /usr/local/gpx/users -R
 chown root: /usr/local/gpx/ftpd -R
-chmod 0660 /usr/local/gpx/users -R
+#chmod 0660 /usr/local/gpx/users -R
 chmod 0750 /usr/local/gpx/{logs,templates} -R
 chmod 0660 /usr/local/gpx/logs/*
-chmod 0700 /usr/local/gpx/{addons,queue,tmp,etc,uploads,users} -R
+#chmod 0700 /usr/local/gpx/{addons,queue,tmp,etc,uploads,users} -R
+chmod 0700 /usr/local/gpx/{addons,queue,tmp,etc,uploads} -R
 chmod 0760 /usr/local/gpx/queue /usr/local/gpx/tmp
 chmod 0774 /usr/local/gpx/users
 chmod 0555 /usr/local/gpx/bin
