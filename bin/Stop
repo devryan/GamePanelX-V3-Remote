@@ -20,10 +20,11 @@ srv_port=
 suspend_srv=
 restart_pid=
 working_dir=
+#pid_file=
 srv_pid_file=
 debug=
 
-while getopts "u:i:p:s:r:w:P:d:" OPTION
+while getopts "u:i:p:s:r:w:P:d:n:" OPTION
 do
      case $OPTION in
         u)
@@ -50,11 +51,15 @@ do
 	d)
 		debug=$OPTARG
 		;;
+	n)
+		noremove_srvd=$OPTARG
+		;;
         ?)
              	exit
              	;;
      esac
 done
+# pid_file=$OPTARG
 
 if [[ "$srv_username" == "" || "$srv_ip" == "" || "$srv_port" == "" ]]
 then
@@ -70,6 +75,19 @@ if [ ! -d $gpxdir ]
 then
         echo "Stop: Game directory ($gpxdir) doesnt exist!  Exiting."
         exit
+fi
+
+# Kill main process if the server has it's own PID file
+if [ "$srv_pid_file" ]
+then
+        if [ -f $gpxdir/$srv_pid_file ]
+        then
+                pid_file_pid="$(cat $gpxdir/$srv_pid_file)"
+
+                if [[ "$pid_file_pid" && -e /proc/$pid_file_pid ]]; then
+			kill $pid_file_pid
+		fi
+        fi
 fi
 
 if [ -f $gpxdir/.gpxpid ]
@@ -108,11 +126,19 @@ then
     fi
 
     # Kill PID if server actually gave us one
-    if [[ "$srv_pid_file" && -e $gpxdir/$srv_pid_file ]]; then
-	pid_file_pid="$(cat $gpxdir/$srv_pid_file)"
+    # if [ "$srv_pid_file" ]
+    # then
+    #     echo "PID FILE: $srv_pid_file"
 
-	if [[ "$pid_file_pid" && -e /proc/$pid_file_pid ]]; then kill $pid_file_pid; fi
-    fi
+    #     if [ -e $srv_pid_file ]
+    #     then
+    #     	pid_file_pid="$(cat $srv_pid_file)"
+
+    #     	echo "PID : $pid_file_pid"
+
+    #     	if [[ "$pid_file_pid" && -e /proc/$pid_file_pid ]]; then kill $pid_file_pid; fi
+    #     fi
+    # fi
 
     # Kill all server processes
     if [ -f $gpxdir/.gpxpid ]
@@ -163,15 +189,6 @@ then
 
     # Remove the PID files
     rm -f $gpxdir/.gpxpid $gpxdir/.gpxrespid
-
-# External PID files (e.g. server forks off and saves their own PID file)
-elif [ "$srv_pid_file" ]; then
-        external_pid="$(cat $gpxdir/$srv_pid_file)"
-        #if [ "$external_pid" == "" ]; then
-        #       echo "External PID ($gpxdir/$pid_file) not found!  Exiting."
-        #       exit
-        #fi
-        if [ -e /proc/$external_pid ]; then kill $external_pid; fi
 fi
 
 # Kill any updating processes - Callback should then set status to complete
@@ -208,6 +225,11 @@ then
     then
         echo y | mv $gpxdir $gpxsuspdir
     fi
+fi
+
+# Remove srv.d file so this does not start on reboot
+if [[ -d /usr/local/gpx/srv.d && -f /usr/local/gpx/srv.d/$srv_ip:$srv_port && "$noremove_srvd" == "" ]]; then
+	rm -f /usr/local/gpx/srv.d/$srv_ip:$srv_port
 fi
 
 echo "success"

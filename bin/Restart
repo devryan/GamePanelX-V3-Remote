@@ -70,7 +70,8 @@ then
 fi
 
 # Check for homedir
-gpxdir=/usr/local/gpx/users/$srv_username/$srv_ip:$srv_port
+usrdir=/usr/local/gpx/users/$srv_username
+gpxdir=$usrdir/$srv_ip:$srv_port
 serverlog=/usr/local/gpx/logs/servers.log
 
 # Log this
@@ -123,7 +124,6 @@ do
     # if [ "$(ps -ef | awk '{print $2}' | grep \"$parent_pid\" | grep -v grep)" == "" ]
     if [[ "$parent_pid" && ! -e /proc/$parent_pid || "$parent_pid" == "" ]]
     then
-
         if [ -n "$working_dir" ]
         then
                 if [ -d $gpxdir/$working_dir/ ]
@@ -166,7 +166,7 @@ do
 			screen -wipe 2>&1 >> /dev/null
 
 			# Start screen
-                        screen -d -m -S "$srv_ip:$srv_port" $srv_cmd_line 2>&1 >> $serverlog
+                        screen -L -c $usrdir/.screen.rc -d -m -S "$srv_ip:$srv_port" $srv_cmd_line 2>&1 >> $serverlog
                         screen_pid="$(screen -list | grep "$srv_ip:$srv_port" | awk '{print $1}' | awk -F. '{print $1}')"
 
                         # Ensure screen started...
@@ -182,9 +182,7 @@ do
                         fi
 
                         pid=$(ps -ef | awk '{print $2,$3}' | grep "$screen_pid" | sort -n | tail -1 | awk '{print $1}')
-                        echo $screen_pid > $gpxdir/.gpxscreen.pid
-
-
+                	echo $screen_pid > $gpxdir/.gpxscreen.pid
 		fi
 	    else
 		$srv_cmd_line >> /dev/null 2>&1 &
@@ -197,13 +195,12 @@ do
         echo $pid > $gpxdir/.gpxpid
 
 	# If server has it's own PID, save that to ours
-        if [ -n "$srv_pidfile" ]
+        if [ "$srv_pidfile" ]
         then
-            sleep 2
             if [ -f $gpxdir/$srv_pidfile ]
             then
                 echo y | cp $gpxdir/$srv_pidfile $gpxdir/.gpxpid
-                parent_pid=`cat $gpxdir/.gpxpid`
+                parent_pid=$(cat $gpxdir/.gpxpid)
             fi
         fi
     fi
@@ -224,6 +221,17 @@ fi
 if [ "$res_pid" ]
 then
 	echo $res_pid > $gpxdir/.gpxrespid
+fi
+
+# Write this info to srv.d so this server restarts on reboot
+if [ -d /usr/local/gpx/srv.d ]; then
+	echo "user: $srv_username
+ip: $srv_ip
+port: $srv_port
+pid: $srv_pidfile
+workingdir: $working_dir
+gpxcmd: $srv_cmd_line
+taskset: $taskset_cpu" > /usr/local/gpx/srv.d/$srv_ip:$srv_port
 fi
 
 echo "success"
