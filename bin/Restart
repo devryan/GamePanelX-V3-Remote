@@ -166,7 +166,7 @@ do
 			screen -wipe 2>&1 >> /dev/null
 
 			# Start screen
-                        screen -L -c $usrdir/.screen.rc -d -m -S "$srv_ip:$srv_port" $srv_cmd_line 2>&1 >> $serverlog
+			screen -d -m -S "$srv_ip:$srv_port" $srv_cmd_line 2>&1 >> $serverlog
                         screen_pid="$(screen -list | grep "$srv_ip:$srv_port" | awk '{print $1}' | awk -F. '{print $1}')"
 
                         # Ensure screen started...
