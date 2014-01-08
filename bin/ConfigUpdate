@@ -142,52 +142,29 @@ fi
 
 #################################################################################
 
-#
+# Normal key/vals
 # Replace key=value with the correct key, separator, and value on this config
-#
+# e.g. ip=x.x.x.x
+# Key being ip, separator being =, and value being x.x.x.x
+if [ "$cfg_key_ip" ]; then sed -i "s/^$cfg_key_ip.*/$cfg_key_ip$cfg_sep$cfg_val_ip/g" $cfg_file; fi
+if [ "$cfg_key_port" ]; then sed -i "s/^$cfg_key_port.*/$cfg_key_port$cfg_sep$cfg_val_port/g" $cfg_file; fi
+if [ "$cfg_key_map" ]; then sed -i "s/^$cfg_key_map.*/$cfg_key_map$cfg_sep$cfg_val_map/g" $cfg_file; fi
+if [ "$cfg_key_maxpl" ]; then sed -i "s/^$cfg_key_maxpl.*/$cfg_key_maxpl$cfg_sep$cfg_val_maxpl/g" $cfg_file; fi
+if [ "$cfg_key_rcon" ]; then sed -i "s/^$cfg_key_rcon.*/$cfg_key_rcon$cfg_sep$cfg_val_rcon/g" $cfg_file; fi
+if [ "$cfg_key_hostn" ]; then sed -i "s/^$cfg_key_hostn.*/$cfg_key_hostn$cfg_sep$cfg_val_hostn/g" $cfg_file; fi
+if [ "$cfg_key_passw" ]; then sed -i "s/^$cfg_key_passw.*/$cfg_key_passw$cfg_sep$cfg_val_passw/g" $cfg_file; fi
 
-# IP Address
-if [ "$cfg_key_ip" ]
-then
-	sed -i "s/^$cfg_key_ip.*/$cfg_key_ip$cfg_sep$cfg_val_ip/g" $cfg_file
+#################################################################################
+
+# XML Config files (such as Multi-Theft Auto/MTA).  Set "Config Separator" to "X" (caps matters) in default games to make it work with XML.
+if [ "$cfg_sep" == "X" ]; then
+	if [ "$cfg_key_ip" ]; then sed -i "s/<$cfg_key_ip>.*/<$cfg_key_ip>$cfg_val_ip<\/$cfg_key_ip>/g" $cfg_file; fi
+	if [ "$cfg_key_port" ]; then sed -i "s/<$cfg_key_port>.*/<$cfg_key_port>$cfg_val_port<\/$cfg_key_port>/g" $cfg_file; fi
+	if [ "$cfg_key_map" ]; then sed -i "s/<$cfg_key_map>.*/<$cfg_key_map>$cfg_val_map<\/$cfg_key_map>/g" $cfg_file; fi
+	if [ "$cfg_key_maxpl" ]; then sed -i "s/<$cfg_key_maxpl>.*/<$cfg_key_maxpl>$cfg_val_maxpl<\/$cfg_key_maxpl>/g" $cfg_file; fi
+	if [ "$cfg_key_rcon" ]; then sed -i "s/<$cfg_key_rcon>.*/<$cfg_key_rcon>$cfg_val_rcon<\/$cfg_key_rcon>/g" $cfg_file; fi
+	if [ "$cfg_key_hostn" ]; then sed -i "s/<$cfg_key_hostn>.*/<$cfg_key_hostn>$cfg_val_hostn<\/$cfg_key_hostn>/g" $cfg_file; fi
+	if [ "$cfg_key_passw" ]; then sed -i "s/<$cfg_key_passw>.*/<$cfg_key_passw>$cfg_val_passw<\/$cfg_key_passw>/g" $cfg_file; fi
 fi
-
-# Port
-if [ "$cfg_key_port" ]
-then
-	# echo "UPDATING PORT.  Key: $cfg_key_port, sep: $cfg_sep, val: $cfg_val_port"
-        sed -i "s/^$cfg_key_port.*/$cfg_key_port$cfg_sep$cfg_val_port/g" $cfg_file
-fi
-
-# Map
-if [ "$cfg_key_map" ]
-then
-        sed -i "s/^$cfg_key_map.*/$cfg_key_map$cfg_sep$cfg_val_map/g" $cfg_file
-fi
-
-# Max Players
-if [ "$cfg_key_maxpl" ]
-then
-        sed -i "s/^$cfg_key_maxpl.*/$cfg_key_maxpl$cfg_sep$cfg_val_maxpl/g" $cfg_file
-fi
-
-# Rcon
-if [ "$cfg_key_rcon" ]
-then
-	sed -i "s/^$cfg_key_rcon.*/$cfg_key_rcon$cfg_sep$cfg_val_rcon/g" $cfg_file
-fi
-
-# Hostname
-if [ "$cfg_key_hostn" ]
-then
-        sed -i "s/^$cfg_key_hostn.*/$cfg_key_hostn$cfg_sep$cfg_val_hostn/g" $cfg_file
-fi
-
-# Server Password
-if [ "$cfg_key_passw" ]
-then
-        sed -i "s/^$cfg_key_passw.*/$cfg_key_passw$cfg_sep$cfg_val_passw/g" $cfg_file
-fi
-
 
 echo "success"
