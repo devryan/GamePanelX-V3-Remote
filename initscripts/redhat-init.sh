@@ -5,7 +5,7 @@
 # chkconfig: 345 55 25
 # description: GamePanelX Remote
 #
-. /etc/rc.d/init.d/functions
+if [ -f /etc/rc.d/init.d/functions ]; then . /etc/rc.d/init.d/functions; fi
 serverlog=/usr/local/gpx/logs/servers.log
 
 case "$1" in

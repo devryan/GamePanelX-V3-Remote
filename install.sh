@@ -4,6 +4,7 @@
 # Remote Scripts v3.0.14
 #
 # Installation Script
+# NOTE: These scripts should work on RedHat, Debian, and Gentoo Linux distributions.
 #
 # Licensed under the GPL (GNU General Public License V3)
 #
@@ -187,12 +188,21 @@ fi
 # Start the manager daemon
 /usr/local/gpx/bin/GPXManager
 
-# Setup initscript for RedHat / CentOS / Fedora
+# Setup initscript
+
+# RedHat / CentOS / Fedora
 if [ -f /etc/redhat-release ]; then
-	echo "Adding system GamePanelX service ..."
-	cp gpx /etc/init.d/gpx
+	echo "Adding RedHat system GamePanelX service ..."
+	cp ./initscripts/redhat-init.sh /etc/init.d/gpx
 	chmod u+x /etc/init.d/gpx
 	chkconfig gpx on
+# Ubuntu / Debian
+# lsb_release -i | grep -Ei 'ubuntu|debian'
+elif [ -f /etc/debian_version  ]; then
+	echo "Adding Debian/Ubuntu system GamePanelX service ..."
+	cp ./initscripts/debian-init.sh /etc/init.d/gpx
+	chmod u+x /etc/init.d/gpx
+	update-rc.d gpx defaults
 fi
 
 #############################################################################################################
