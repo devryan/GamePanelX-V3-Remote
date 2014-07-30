@@ -1,4 +1,12 @@
-# gpx - gpx job file
+### BEGIN INIT INFO
+# Provides:          gpx
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start GamePanelX Remote at boot time
+# Description:       GamePanelX Remote
+### END INIT INFO
 
 description "GamePanelX Remote daemon"
 author "Ryan Gehrig <ryan@gamepanelx.com>"
