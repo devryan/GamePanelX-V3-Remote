@@ -201,6 +201,9 @@ if [ -f /etc/redhat-release ]; then
 elif [ -f /etc/debian_version  ]; then
 	echo "Adding Debian/Ubuntu system GamePanelX service ..."
 	cp ./initscripts/debian-init.sh /etc/init.d/gpx
+	cp ./initscripts/debian-st* $gpx_user_home/bin/
+	chown root:root $gpx_user_home/bin/debian*
+	chmod 0700 $gpx_user_home/bin/debian*
 	chmod u+x /etc/init.d/gpx
 	update-rc.d gpx defaults
 fi
