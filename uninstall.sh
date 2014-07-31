@@ -64,8 +64,8 @@ then
 
     if [[ "$gpx_accept" == "y" || "$gpx_accept" == "yes" || "$gpx_accept" == "Y" ]]
     then
-        echo "Removing $last_user ..."
-        userdel $last_user
+        echo "Removing $last_user and their homedir ..."
+        userdel -r $last_user
         
         echo "Stopping FTP server ..."
         pkill pure-ftpd
