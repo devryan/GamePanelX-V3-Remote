@@ -8,11 +8,47 @@
 # Description:       GamePanelX Remote
 ### END INIT INFO
 
-description "GamePanelX Remote daemon"
-author "Ryan Gehrig <ryan@gamepanelx.com>"
-start on runlevel [2345]
-stop on runlevel [016]
-respawn
-expect fork
-exec /usr/local/gpx/bin/debian-start
-pre-stop /usr/local/gpx/bin/debian-stop
+set -e
+
+# /etc/init.d/gpx: start and stop the GamePanelX Remote daemon(s)
+
+test -x /usr/local/gpx/bin/GPXManager || exit 0
+umask 022
+. /lib/lsb/init-functions
+
+case "$1" in
+  start)
+        log_daemon_msg "Starting GamePanelX Remote" "gpx" || true
+        if start-stop-daemon --start --quiet --oknodo --pid /usr/local/gpx/gpxmanager.pid --exec /usr/local/gpx/bin/daemon-start; then
+            log_end_msg 0 || true
+        else
+            log_end_msg 1 || true
+        fi
+        ;;
+  stop)
+        log_daemon_msg "Stopping GamePanelX Remote" "gpx" || true
+        if start-stop-daemon --stop --quiet --oknodo --pid /usr/local/gpx/gpxmanager.pid --exec /usr/local/gpx/bin/daemon-stop; then
+            log_end_msg 0 || true
+        else
+            log_end_msg 1 || true
+        fi
+        ;;
+  restart)
+        log_daemon_msg "Restarting GamePanelX Remote" "gpx" || true
+        start-stop-daemon --stop --quiet --oknodo --retry 30 --pid /usr/local/gpx/gpxmanager.pid --exec /usr/local/gpx/bin/daemon-stop
+        if start-stop-daemon --start --quiet --oknodo --exec /usr/local/gpx/bin/daemon-start; then
+            log_end_msg 0 || true
+        else
+            log_end_msg 1 || true
+        fi
+        ;;
+
+  status)
+        status_of_proc -p /usr/local/gpx/gpxmanager.pid /usr/sbin/sshd sshd && exit 0 || exit $?
+        ;;
+
+  *)
+        log_action_msg "Usage: /etc/init.d/ssh {start|stop|reload|force-reload|restart|try-restart|status}" || true
+        exit 1
+esac
+exit 0
