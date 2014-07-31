@@ -218,6 +218,15 @@ elif [ $os == "debian" ]; then
 	chmod 0700 $gpx_user_home/bin/daemon-st*
 	chmod u+x /etc/init.d/gpx
 	update-rc.d gpx defaults
+# Gentoo
+elif [ $os == "gentoo" ]; then
+	echo "Adding Gentoo system GamePanelX service ..."
+	cp ./initscripts/gentoo-init.sh /etc/init.d/gpx
+	cp ./initscripts/daemon-st* $gpx_user_home/bin/
+	chown root:root $gpx_user_home/bin/daemon-st*
+        chmod 0700 $gpx_user_home/bin/daemon-st*
+        chmod u+x /etc/init.d/gpx
+	rc-update add gpx default
 fi
 
 #############################################################################################################
