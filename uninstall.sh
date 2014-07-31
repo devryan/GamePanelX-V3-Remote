@@ -75,7 +75,24 @@ then
     echo "Removing /usr/local/gpx in 4 seconds (CTRL+C to stop) ..."
     sleep 4
     rm -fr /usr/local/gpx
-    
+
+    ## Remove from boot
+
+    # CentOS / RedHat
+    if [ -f /etc/redhat-release ]; then
+        echo "Removing RedHat system GamePanelX service ..."
+        chkconfig gpx off
+    # Debian / Ubuntu
+    elif [ -f /etc/debian_version ]; then
+        echo "Removing Debian system GamePanelX service ..."
+        update-rc.d -f gpx remove
+    # Gentoo
+    elif [ -f /etc/gentoo-release ]; then
+        echo "Removing Gentoo system GamePanelX service ..."
+        rc-update del gpx default
+    fi
+    rm -f /etc/init.d/gpx
+   
     echo
     echo "Successfully removed GamePanelX Remote."
 fi
