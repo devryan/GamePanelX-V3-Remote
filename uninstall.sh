@@ -92,6 +92,9 @@ then
     sleep 4
     rm -fr /usr/local/gpx
 
+    ## Stop services
+    /etc/init.d/gpx stop
+
     ## Remove from boot
 
     # CentOS / RedHat
