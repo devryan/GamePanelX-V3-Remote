@@ -1,0 +1,37 @@
+#!/bin/bash
+serverlog=/usr/local/gpx/logs/servers.log
+
+# Start manager
+/usr/local/gpx/bin/GPXManager
+
+# Start FTP server
+if [ -f /usr/local/gpx/ftpd/start.sh ]; then
+        /usr/local/gpx/ftpd/start.sh
+fi
+
+# Start all previously running game servers
+if [ -d /usr/local/gpx/srv.d ]; then
+        for gamesrv in $(ls /usr/local/gpx/srv.d); do
+                if [ "$gamesrv" ]; then
+                        if [ -f /usr/local/gpx/srv.d/$gamesrv ]; then
+                                this_srvfile=/usr/local/gpx/srv.d/$gamesrv
+                                srv_user=$(grep '^user\:\ ' $this_srvfile | awk '{print $2}')
+                                srv_ip=$(grep '^ip\:\ ' $this_srvfile | awk '{print $2}')
+                                srv_port=$(grep '^port\:\ ' $this_srvfile | awk '{print $2}')
+                                srv_pid=$(grep '^pid\:\ ' $this_srvfile | awk '{print $2}')
+                                srv_workingdir=$(grep '^workingdir\:\ ' $this_srvfile | awk '{print $2}')
+                                srv_cmd=$(grep '^gpxcmd\:\ ' $this_srvfile | awk '{$1=""; print $0}')
+                                srv_taskset=$(grep '^taskset\:\ ' $this_srvfile | awk '{print $2}')
+
+                                # Ensure user exists
+                                if [ "$(grep "^gpx$srv_user:" /etc/passwd)" ]; then
+                                        # Start up gameserver
+                                        echo "$(date) $(hostname) initscript: Starting server $srv_ip:$srv_port for user $srv_user ..." >> $serverlog
+                                        su - gpx$srv_user -c "/usr/local/gpx/bin/Restart -u $srv_user -i $srv_ip -p $srv_port -P \"$srv_pid\" -w \"$srv_workingdir\" -o '$srv_cmd'" >> /dev/null 2>&1 &
+                                else
+                                        echo "$(date) $(hostname) initscript: Found srv.d/$gamesrv for startup, but user did not exist.  Skipping." >> $serverlog
+                                fi
+                        fi
+                fi
+        done
+fi

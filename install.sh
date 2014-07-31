@@ -24,12 +24,27 @@ then
     exit
 fi
 
+## Detect Linux OS
+# CentOS / RedHat
+if [ -f /etc/redhat-release ]; then
+        os="redhat"
+# Debian / Ubuntu
+elif [ -f /etc/debian_version ]; then
+        os="debian"
+# Gentoo
+elif [ -f /etc/gentoo-release ]; then
+        os="gentoo"
+else
+        os="unknown"
+        echo 'WARNING: You are using an unsupported Linux version!  Continue at your own risk!'
+        echo
+fi
+
 # Check for GNU Screen
 if [ "$(which screen 2>&1 | grep 'no screen in')" ]
 then
         # CentOS / RedHat
-        if [ -f /etc/redhat-release ]
-        then
+	if [ $os == "redhat" ]; then
                 echo
                 read -p "(RedHat) Missing requirements!  Is it OK to install packages via Yum (yum install screen)? (y/n): " gpx_ok_yum
 
@@ -38,8 +53,7 @@ then
                         yum -y install screen
                 fi
         # Debian / Ubuntu
-        elif [ -f /etc/debian_version ]
-        then 
+	elif [ $os == "debian" ]; then
                 echo
                 read -p "(Debian) Missing requirements!  Is it OK to install packages via APT (apt-get install screen)? (y/n): " gpx_ok_apt
 
@@ -48,8 +62,7 @@ then
                         apt-get --yes install screen
                 fi
         # Gentoo
-        elif [ -f /etc/gentoo-release ]
-        then
+	elif [ $os == "gentoo" ]; then
                 echo
                 read -p "(Gentoo) Missing requirements!  Is it OK to install packages via Portage (emerge screen)? (y/n): " gpx_ok_gentoo
 
@@ -191,19 +204,18 @@ fi
 # Setup initscript
 
 # RedHat / CentOS / Fedora
-if [ -f /etc/redhat-release ]; then
+if [ $os == "redhat" ]; then
 	echo "Adding RedHat system GamePanelX service ..."
 	cp ./initscripts/redhat-init.sh /etc/init.d/gpx
 	chmod u+x /etc/init.d/gpx
 	chkconfig gpx on
 # Ubuntu / Debian
-# lsb_release -i | grep -Ei 'ubuntu|debian'
-elif [ -f /etc/debian_version  ]; then
+elif [ $os == "debian" ]; then
 	echo "Adding Debian/Ubuntu system GamePanelX service ..."
 	cp ./initscripts/debian-init.sh /etc/init.d/gpx
-	cp ./initscripts/debian-st* $gpx_user_home/bin/
-	chown root:root $gpx_user_home/bin/debian*
-	chmod 0700 $gpx_user_home/bin/debian*
+	cp ./initscripts/daemon-st* $gpx_user_home/bin/
+	chown root:root $gpx_user_home/bin/daemon-st*
+	chmod 0700 $gpx_user_home/bin/daemon-st*
 	chmod u+x /etc/init.d/gpx
 	update-rc.d gpx defaults
 fi
