@@ -27,7 +27,7 @@ case "$1" in
         ;;
   stop)
         log_daemon_msg "Stopping GamePanelX Remote" "gpx" || true
-        if start-stop-daemon --stop --quiet --oknodo --pid /usr/local/gpx/gpxmanager.pid --exec /usr/local/gpx/bin/daemon-stop; then
+        if start-stop-daemon --start --quiet --oknodo --pid /usr/local/gpx/gpxmanager.pid --exec /usr/local/gpx/bin/daemon-stop; then
             log_end_msg 0 || true
         else
             log_end_msg 1 || true
