@@ -37,7 +37,7 @@ fi
 ##############################################################
 
 # Check for a running FTP server
-ftp_out="$(netstat -an | grep ':21' | grep LISTEN)"
+ftp_out="$(netstat -an | grep ':21 ' | grep LISTEN)"
 
 if [ "$ftp_out" ]
 then
