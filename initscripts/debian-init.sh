@@ -42,13 +42,8 @@ case "$1" in
             log_end_msg 1 || true
         fi
         ;;
-
-  status)
-        status_of_proc -p /usr/local/gpx/gpxmanager.pid /usr/sbin/sshd sshd && exit 0 || exit $?
-        ;;
-
   *)
-        log_action_msg "Usage: /etc/init.d/ssh {start|stop|reload|force-reload|restart|try-restart|status}" || true
+        log_action_msg "Usage: /etc/init.d/gpx {start|stop|restart}" || true
         exit 1
 esac
 exit 0
