@@ -35,7 +35,7 @@ case "$1" in
         ;;
   restart)
         log_daemon_msg "Restarting GamePanelX Remote" "gpx" || true
-        start-stop-daemon --stop --quiet --oknodo --retry 30 --pid /usr/local/gpx/gpxmanager.pid --exec /usr/local/gpx/bin/daemon-stop
+        start-stop-daemon --start --quiet --oknodo --retry 30 --pid /usr/local/gpx/gpxmanager.pid --exec /usr/local/gpx/bin/daemon-stop
         if start-stop-daemon --start --quiet --oknodo --exec /usr/local/gpx/bin/daemon-start; then
             log_end_msg 0 || true
         else
