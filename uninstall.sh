@@ -17,22 +17,25 @@ if [[ "$gpx_sure_remove" == "y" || "$gpx_sure_remove" == "yes" || "$gpx_sure_rem
 then
     # Optionally remove client system accounts
     echo
-    read -p "Also remove ALL GamePanelX client system accounts (e.g. gpxuser123) from this server? (y/n): " gpx_sure_rm_clients
+    total_clients=$(grep -c ':GamePanelX User:' /etc/passwd)
 
-    if [[ "$gpx_sure_rm_clients" == "y" || "$gpx_sure_rm_clients" == "yes" || "$gpx_sure_rm_clients" == "Y" ]]; then
-	total_clients=$(grep -c ':GamePanelX User:' /etc/passwd)
-	echo "OK, removing ALL GamePanelX client system accounts ($total_clients total) in 4 seconds (CTRL+C to stop) ..."
-	sleep 4
+    if [ $total_clients -gt 0 ]; then
+        read -p "Also remove ALL GamePanelX client system accounts (e.g. gpxuser123) from this server? (y/n): " gpx_sure_rm_clients
 
-        for gpxclient in $(grep ':GamePanelX User:' /etc/passwd | awk -F':' '{print $1}' | grep -E '^gpx')
-        do
-            if [[ "$gpxclient" && "$gpxclient" != "root" ]]; then
-		echo "Removing system account $gpxclient and their homedir ..."
-                userdel -r $gpxclient
-            fi
-        done
-    else
-	echo "We will NOT be removing any GamePanelX client system accounts."
+        if [[ "$gpx_sure_rm_clients" == "y" || "$gpx_sure_rm_clients" == "yes" || "$gpx_sure_rm_clients" == "Y" ]]; then
+            echo "OK, removing ALL GamePanelX client system accounts ($total_clients total) in 4 seconds (CTRL+C to stop) ..."
+            sleep 4
+
+            for gpxclient in $(grep ':GamePanelX User:' /etc/passwd | awk -F':' '{print $1}' | grep -E '^gpx')
+            do
+                if [[ "$gpxclient" && "$gpxclient" != "root" ]]; then
+            	echo "Removing system account $gpxclient and their homedir ..."
+                    userdel -r $gpxclient
+                fi
+            done
+        else
+            echo "We will NOT be removing any GamePanelX client system accounts."
+        fi
     fi
 
     # Remove main user account
