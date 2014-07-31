@@ -55,7 +55,7 @@ gpx_checkreq () {
 	apt_cmd=
 
 	# Check GCC Compiler
-	if [[ "$(which make 2>&1 | grep 'no make in')" || "$(which gcc 2>&1 | grep 'no gcc in')" ]]
+	if [[ ! -f /usr/bin/make && ! -f /usr/local/bin/make && ! -f /bin/make ]]; then
 	then
 	    yum_cmd="gcc kernel-headers make"
 	    apt_cmd="build-essential"
