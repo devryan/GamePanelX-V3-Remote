@@ -11,6 +11,22 @@ echo -e "\e[00;34mWelcome to the GamePanelX uninstaller!"
 echo -e "This will attempt to remove any GamePanelX-related files.\e[00m"
 echo
 
+## Detect Linux OS
+# CentOS / RedHat
+if [ -f /etc/redhat-release ]; then
+        os="redhat"
+# Debian / Ubuntu
+elif [ -f /etc/debian_version ]; then
+        os="debian"
+# Gentoo
+elif [ -f /etc/gentoo-release ]; then
+        os="gentoo"
+else
+	os="unknown"
+	echo 'WARNING: You are using an unsupported Linux version!  Continue at your own risk!'
+	echo
+fi
+
 read -p "Are you sure?  Remove ALL GamePanelX Remote files? (y/n): " gpx_sure_remove
 
 if [[ "$gpx_sure_remove" == "y" || "$gpx_sure_remove" == "yes" || "$gpx_sure_remove" == "Y" ]]
@@ -79,15 +95,15 @@ then
     ## Remove from boot
 
     # CentOS / RedHat
-    if [ -f /etc/redhat-release ]; then
+    if [ $os == "redhat" ]; then
         echo "Removing RedHat system GamePanelX service ..."
         chkconfig gpx off
     # Debian / Ubuntu
-    elif [ -f /etc/debian_version ]; then
+    elif [ $os == "debian" ]; then
         echo "Removing Debian system GamePanelX service ..."
         update-rc.d -f gpx remove
     # Gentoo
-    elif [ -f /etc/gentoo-release ]; then
+    elif [ $os == "gentoo" ]; then
         echo "Removing Gentoo system GamePanelX service ..."
         rc-update del gpx default
     fi
