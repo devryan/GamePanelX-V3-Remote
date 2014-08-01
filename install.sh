@@ -231,6 +231,32 @@ fi
 
 #############################################################################################################
 
+# Gameserver dependencies
+if [ $os == "debian" ]; then
+	pkg_list=
+
+	if [ "$(dpkg --get-selections | grep lib32gcc1 | grep -v deinstall)" == "" ]; then pkg_list=$pkg_list" lib32gcc1"; fi
+	if [ "$(dpkg --get-selections | grep lib32bz2 | grep -v deinstall)" == "" ]; then pkg_list=$pkg_list" lib32bz2-1.0"; fi
+	if [ "$(dpkg --get-selections | grep lib32ncurses5 | grep -v deinstall)" == "" ]; then pkg_list=$pkg_list" lib32ncurses5"; fi
+	if [ "$(dpkg --get-selections | grep lib32tinfo5 | grep -v deinstall)" == "" ]; then pkg_list=$pkg_list" lib32tinfo5"; fi
+	if [ "$(dpkg --get-selections | grep lib32z1 | grep -v deinstall)" == "" ]; then pkg_list=$pkg_list" lib32z1"; fi
+	if [ "$(dpkg --get-selections | grep libc6 | grep -v deinstall)" == "" ]; then pkg_list=$pkg_list" libc6"; fi
+	if [ "$(dpkg --get-selections | grep 'libstdc++6' | grep -v deinstall)" == "" ]; then pkg_list=$pkg_list" libstdc++6"; fi
+
+	if [ "$pkg_list" ]; then
+		echo
+		echo "There are some missing packages that are required for certain gameservers."
+		echo "Packages required: $pkg_list"
+		read -p "Install these now? (y/n): " install_gs_pkgs
+
+		if [[ "$install_gs_pkgs" == "y" || "$install_gs_pkgs" == "yes" || "$install_gs_pkgs" == "Y" ]]; then
+			apt-get -y install $pkg_list
+		fi
+	fi
+fi
+
+#############################################################################################################
+
 # FTP Server Installation
 echo;echo
 read -p "Install GamePanelX FTP server? (y/n): " gpx_ftp_ans
