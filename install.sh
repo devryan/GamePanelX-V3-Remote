@@ -46,7 +46,7 @@ then
         # CentOS / RedHat
 	if [ $os == "redhat" ]; then
                 echo
-                read -p "(RedHat) Missing requirements!  Is it OK to install packages via Yum (yum install screen)? (y/n): " gpx_ok_yum
+                read -p "(RedHat) Missing requirements.  Is it OK to install packages via Yum (yum install screen)? (y/n): " gpx_ok_yum
 
                 if [[ "$gpx_ok_yum" == "y" || "$gpx_ok_yum" == "yes" || "$gpx_ok_yum" == "Y" ]]
                 then
@@ -55,7 +55,7 @@ then
         # Debian / Ubuntu
 	elif [ $os == "debian" ]; then
                 echo
-                read -p "(Debian) Missing requirements!  Is it OK to install packages via APT (apt-get install screen)? (y/n): " gpx_ok_apt
+                read -p "(Debian) Missing requirements.  Is it OK to install packages via APT (apt-get install screen)? (y/n): " gpx_ok_apt
 
                 if [[ "$gpx_ok_apt" == "y" || "$gpx_ok_apt" == "yes" || "$gpx_ok_apt" == "Y" ]]
                 then
@@ -64,7 +64,7 @@ then
         # Gentoo
 	elif [ $os == "gentoo" ]; then
                 echo
-                read -p "(Gentoo) Missing requirements!  Is it OK to install packages via Portage (emerge screen)? (y/n): " gpx_ok_gentoo
+                read -p "(Gentoo) Missing requirements.  Is it OK to install packages via Portage (emerge screen)? (y/n): " gpx_ok_gentoo
 
                 if [[ "$gpx_ok_gentoo" == "y" || "$gpx_ok_gentoo" == "yes" || "$gpx_ok_gentoo" == "Y" ]]
                 then
@@ -76,28 +76,25 @@ fi
 ##############################################################
 
 # User input
-read -p "Create this Linux user for game/voice servers: " gpx_user
+read -p "Create this Linux user for game/voice servers (default: gpx): " gpx_user
 echo
 
 # Check required
-if [ "$gpx_user" == "" ]
-then
-    # echo "You must specify a username!  Exiting."
-    echo -e "\e[00;31mYou must specify a username!  Exiting.\e[00m"
-    exit
+if [ "$gpx_user" == "" ]; then
+    gpx_user="gpx"
 fi
 
 # Check if user already exists
 if [ "$(grep "^$gpx_user:" /etc/passwd)" ]
 then
-    echo "ERROR: That user already exists!.  Please choose a different username and try again.  Exiting."
+    echo "ERROR: That user ($gpx_user) already exists.  Please choose a different username and try again.  Exiting."
     exit
 fi
 
 # Create the main /usr/local/gpx
 if [ -d /usr/local/gpx ]
 then
-    echo "GPX directory (/usr/local/gpx) already exists!  Please uninstall first if you wish to start over.  Exiting."
+    echo "GPX directory (/usr/local/gpx) already exists.  Please uninstall first if you wish to start over.  Exiting."
     exit
 else
     mkdir /usr/local/gpx
@@ -113,7 +110,7 @@ echo $gpx_user > $gpx_user_home/.gpx_lastuser
 # Make sure homedir exists
 if [ ! -d "$gpx_user_home" ]
 then
-        echo "ERROR: Failed to find the users homedir!  Exiting."
+        echo "ERROR: Failed to find the users homedir.  Exiting."
         exit
 fi
 
@@ -122,7 +119,7 @@ if [ -f "./gpx-remote-latest.tar.gz" ]
 then
         tar -zxf ./gpx-remote-latest.tar.gz -C $gpx_user_home/
 else
-        echo "ERROR: Latest remote server files (./gpx-remote-latest.tar.gz) not found!  Try re-downloading the remote files and try again.  Exiting."
+        echo "ERROR: Latest remote server files (./gpx-remote-latest.tar.gz) not found.  Try re-downloading the remote files and try again.  Exiting."
         exit
 fi
 
@@ -183,7 +180,7 @@ then
         elif [ -f /etc/rc.d/sshd ]; then
             /etc/rc.d/sshd restart
         else
-            echo "Failed to find the SSH server location!  Please manually restart the SSH server."
+            echo "Failed to find the SSH server location.  Please manually restart the SSH server."
         fi
         
         echo
@@ -265,7 +262,7 @@ if [[ "$gpx_ftp_ans" == "y" || "$gpx_ftp_ans" == "yes" || "$gpx_ftp_ans" == "Y" 
 then
     if [ ! -f ./ftp.sh ]
     then
-        echo "No FTP script (./ftp.sh) found!  Exiting."
+        echo 'No FTP script (./ftp.sh) found!  Exiting.'
         exit
     fi
 
@@ -277,6 +274,6 @@ echo
 echo
 echo "##################################################################"
 echo
-echo -e "\e[00;32mCompleted GamePanelX Remote Server Installation! \e[00m"
+echo -e "\e[00;32mCompleted GamePanelX Remote Server Installation. \e[00m"
 echo
 exit
