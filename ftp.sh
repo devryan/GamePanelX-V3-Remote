@@ -59,6 +59,10 @@ gpx_checkreq () {
 	    yum_cmd="gcc kernel-headers make"
 	    apt_cmd="build-essential"
 	    gentoo_cmd="sys-devel/gcc"
+	elif [[ ! -f /usr/bin/gcc && ! -f /usr/local/bin/gcc && ! -f /bin/gcc ]]; then
+            yum_cmd="gcc kernel-headers make"
+            apt_cmd="build-essential"
+            gentoo_cmd="sys-devel/gcc"
 	fi
 }
 
