@@ -250,6 +250,23 @@ if [ $os == "debian" ]; then
 			apt-get -y install $pkg_list
 		fi
 	fi
+elif [ $os == "redhat" ]; then
+        if [ "$(yum list installed | grep 'glibc.i686')" == "" ]; then pkg_list=$pkg_list" glibc.i686"; fi
+        if [ "$(yum list installed | grep 'libstdc++.i686')" == "" ]; then pkg_list=$pkg_list" libstdc++.i686"; fi
+        if [ "$(yum list installed | grep 'libgcc_s.so.1')" == "" ]; then pkg_list=$pkg_list" libgcc_s.so.1"; fi
+        if [ "$(yum list installed | grep 'libgcc.i686')" == "" ]; then pkg_list=$pkg_list" libgcc.i686"; fi
+        if [ "$(yum list installed | grep 'java-')" == "" ]; then pkg_list=$pkg_list" java"; fi
+
+        if [ "$pkg_list" ]; then
+                echo
+                echo "There are some missing packages that are required for certain gameservers."
+                echo "Packages required: $pkg_list"
+                read -p "Install these now? (y/n): " install_gs_pkgs
+
+                if [[ "$install_gs_pkgs" == "y" || "$install_gs_pkgs" == "yes" || "$install_gs_pkgs" == "Y" ]]; then
+                        yum -y install $pkg_list
+                fi
+        fi
 fi
 
 #############################################################################################################
