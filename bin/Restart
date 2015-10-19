@@ -87,10 +87,10 @@ fi
 
 if [ "$unsuspend_srv" == "yes" ]
 then
-    if [ -d /usr/local/gpx/users/$srv_username/.$srv_ip\:$srv_port/ ]
+    if [ -d /usr/local/gpx/users/$srv_username/.$srv_ip\-$srv_port/ ]
     then
 	echo "$(date) $(hostname) Restart: Unsuspending $srv_ip:$srv_port for user $srv_username ..." >> $serverlog
-        echo y | mv /usr/local/gpx/users/$srv_username/.$srv_ip\:$srv_port $gpxdir
+        echo y | mv /usr/local/gpx/users/$srv_username/.$srv_ip\-$srv_port $gpxdir
     else
 	echo "$(date) $(hostname) Restart: Unsuspend: Directory not found, NOT unsuspending." >> $serverlog
     fi
