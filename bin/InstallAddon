@@ -50,8 +50,8 @@ then
     exit
 fi
 
-nice -n 19 tar -zxf /usr/local/gpx/addons/$tpl_hash.tar.gz -C /usr/local/gpx/users/$srv_username/$srv_type/$srv_ip\:$srv_port/$install_target/ >> /dev/null 2>&1 &
+nice -n 19 tar -zxf /usr/local/gpx/addons/$tpl_hash.tar.gz -C /usr/local/gpx/users/$srv_username/$srv_type/$srv_ip\-$srv_port/$install_target/ >> /dev/null 2>&1 &
 pid=$!
-echo $pid > /usr/local/gpx/users/$srv_username/$srv_type/$srv_ip\:$srv_port/.gpx_addon
+echo $pid > /usr/local/gpx/users/$srv_username/$srv_type/$srv_ip\-$srv_port/.gpx_addon
 
 echo "success"
