@@ -48,7 +48,7 @@ then
   exit
 fi
 
-cur_dir="/usr/local/gpx/users/$srv_username/$srv_ip:$srv_port"
+cur_dir="/usr/local/gpx/users/$srv_username/$srv_ip-$srv_port"
 new_dir="/usr/local/gpx/users/$srv_new_user"
 
 if [ -d $cur_dir ]
