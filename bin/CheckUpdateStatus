@@ -42,9 +42,9 @@ then
   exit
 fi
 
-if [ -f /usr/local/gpx/users/$srv_username/$srv_type/$srv_ip\:$srv_port/.gpxupdatepid ]
+if [ -f /usr/local/gpx/users/$srv_username/$srv_type/$srv_ip\-$srv_port/.gpxupdatepid ]
 then
-    pid=`cat /usr/local/gpx/users/$srv_username/$srv_type/$srv_ip\:$srv_port/.gpxupdatepid`
+    pid=`cat /usr/local/gpx/users/$srv_username/$srv_type/$srv_ip\-$srv_port/.gpxupdatepid`
     check_pid=`ps aux | grep $pid | grep -v grep`
 
     if [ "$check_pid" == "" ]
