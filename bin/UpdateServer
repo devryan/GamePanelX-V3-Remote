@@ -74,7 +74,7 @@ fi
 if [ "$callback_url" ]; then $cback "$callback_url&do=createsrv_status&status=updating" >> /dev/null; fi
 
 # Setup
-gpxdir=/usr/local/gpx/users/$srv_username/$srv_ip\:$srv_port
+gpxdir=/usr/local/gpx/users/$srv_username/$srv_ip\-$srv_port
 serverlog=/usr/local/gpx/logs/servers.log
 #updatelog=$gpxdir/.gpxupdate.log
 #echo > $updatelog
