@@ -36,13 +36,13 @@ then
     exit
 fi
 
-if [ -d /usr/local/gpx/users/$srv_username/$srv_ip\:$srv_port ]
+if [ -d /usr/local/gpx/users/$srv_username/$srv_ip\-$srv_port ]
 then
     # Make sure server is stopped
     /usr/local/gpx/bin/Stop -u $srv_username -i $srv_ip -p $srv_port >> /dev/null 2>&1
 
     # Delete all contents
-    rm -fr /usr/local/gpx/users/$srv_username/$srv_ip\:$srv_port >> /dev/null 2>&1 &
+    rm -fr /usr/local/gpx/users/$srv_username/$srv_ip\-$srv_port >> /dev/null 2>&1 &
 fi
 
 echo "success"

@@ -41,11 +41,11 @@ then
 fi
 
 # Check for homedir
-if [ ! -d /usr/local/gpx/users/$srv_username/$srv_ip:$srv_port ]; then
+if [ ! -d /usr/local/gpx/users/$srv_username/$srv_ip-$srv_port ]; then
         echo '{"error":"Restart: Game directory ('$gpxdir') doesnt exist!"}'
         exit
 else
-	gpxdir=/usr/local/gpx/users/$srv_username/$srv_ip:$srv_port
+	gpxdir=/usr/local/gpx/users/$srv_username/$srv_ip-$srv_port
 fi
 
 # wtf?

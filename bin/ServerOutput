@@ -47,7 +47,7 @@ then
 fi
 
 # Check for homedir
-gpxdir=/usr/local/gpx/users/$srv_username/$srv_ip:$srv_port
+gpxdir=/usr/local/gpx/users/$srv_username/$srv_ip-$srv_port
 
 if [ ! -d $gpxdir ]
 then
