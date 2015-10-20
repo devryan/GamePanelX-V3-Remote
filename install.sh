@@ -256,6 +256,8 @@ elif [ $os == "redhat" ]; then
         if [ "$(yum list installed | grep 'libgcc_s.so.1')" == "" ]; then pkg_list=$pkg_list" libgcc_s.so.1"; fi
         if [ "$(yum list installed | grep 'libgcc.i686')" == "" ]; then pkg_list=$pkg_list" libgcc.i686"; fi
         if [ "$(yum list installed | grep 'java-')" == "" ]; then pkg_list=$pkg_list" java"; fi
+		if [ "$(yum list installed | grep 'wget')" == "" ]; then pkg_list=$pkg_list" wget"; fi
+		if [ "$(yum list installed | grep 'net-tools')" == "" ]; then pkg_list=$pkg_list" net-tools"; fi
 
         if [ "$pkg_list" ]; then
                 echo

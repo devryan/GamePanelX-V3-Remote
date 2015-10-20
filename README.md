@@ -42,10 +42,10 @@ Note: To update a Remote release _older_ than 3.0.10, run:
 ### SUPPORT/DOCUMENTATION/TUTORIALS
 
 
-Website: http://gamepanelx.com/
-Documentation: http://gamepanelx.com/wikiv3/index.php?title=Remote_Install
-Support Forums: http://gamepanelx.com/forums/
-General Documentation: http://gamepanelx.com/wikiv3/
+* [Website] (http://gamepanelx.com/)
+* [Documentation] (http://gamepanelx.com/wikiv3/index.php?title=Remote_Install)
+* [Support Forums] (http://gamepanelx.com/forums/)
+* [General Documentation] (http://gamepanelx.com/wikiv3/)
 
 
 
