@@ -1,3 +1,4 @@
+#!/bin/bash
 ### BEGIN INIT INFO
 # Provides:          gpx
 # Required-Start:    $remote_fs $syslog
