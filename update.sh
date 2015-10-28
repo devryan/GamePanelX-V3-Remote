@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # GamePanelX
-# Remote Scripts v3.0.14
+# Remote Scripts v3.0.15
 #
 # Update Script
 #

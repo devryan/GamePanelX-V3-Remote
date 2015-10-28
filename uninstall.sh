@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # GamePanelX
-# Remote Scripts v3.0.12
+# Remote Scripts v3.0.15
 #
 # Removal Script (Remove last known gpx system user if available)
 #
