@@ -7,15 +7,16 @@
 #
 # Licensed under the GPL (GNU General Public License V3)
 #
+remote_version="3.0.15"
+
 echo -e "\e[00;34m##################################################################"
-echo "##                                                              ##"
-echo "##                         GamePanelX                           ##"
-echo "##                                                              ##"
-echo "##       Welcome to the Remote Update Script (v3.0.14)          ##"
-echo "##                                                              ##"
+echo "                                                              "
+echo "                         GamePanelX                           "
+echo "                                                              "
+echo "       Welcome to the Remote Update Script (v$remote_version)          "
+echo "                                                              "
 echo -e "##################################################################\e[00m"
 echo
-remote_version="3.0.14"
 
 if [ "$UID" -ne "0" ]
 then
