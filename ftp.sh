@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # GamePanelX
-# FTP Install v3.0.14
+# FTP Install v3.0.15
 #
 # This script supports dependency detection on RedHat/CentOS/Fedora, Debian/Ubuntu, and Gentoo
 # Note: As of 3.0.14, MySQL is no longer needed.  System users only; e.g. basic install.
