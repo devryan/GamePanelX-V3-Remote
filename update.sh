@@ -84,10 +84,11 @@ chmod 0754 /usr/local/gpx/bin/*
 ##################################################################
 
 # Run this update script
-if [ -f ./updates/$remote_version.sh ]; then
-	echo "Running $(cwd)/updates/$remote_version.sh ..."
-	chmod +x ./updates/3.0.15.sh
-	./updates/3.0.15.sh
+upd_file="updates/$remote_version.sh"
+if [ -f $upd_file ]; then
+	echo "Running ./$upd_file ..."
+	chmod +x ./$upd_file
+	./$upd_file
 fi
 
 ##################################################################
