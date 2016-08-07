@@ -88,9 +88,16 @@ cd $gpxdir
 
 ################################
 
+# run update CMD
+echo "$(date) $(hostname) Update: `eval $update_cmd 2>&1`"  >> $serverlog
+
 # Begin SteamCMD update
-. /usr/local/gpx/bin/SteamCMDFunctions
-steamcmd_update $steam_game
+if [[ "$steam_game" != "" ]]
+then
+        echo "$(date) $(hostname) Update: run steam $steam_game"  >> $serverlog
+        . /usr/local/gpx/bin/SteamCMDFunctions
+        steamcmd_update $steam_game
+fi
 
 #################################
 
