@@ -122,7 +122,7 @@ quit" > .gpxsteamupdate.txt
 		echo "SteamCMDInstall: Bad password for this Steam account.  Please check the Steam password in Settings and try again.  Exiting." >> $steam_log
 		exit
 	# Check successful login
-	elif [ "$(echo $steam_auth | grep 'Steam Public...Success')" ]
+	elif [ "$(echo $steam_auth | grep 'Logged in OK')" ]
 	then
 		echo "SteamCMDInstall: ($(date)) Steam: force_install_dir: $full_install_dir, app_update: $steam_game" >> $steam_log
 
